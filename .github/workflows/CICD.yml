@@ -29,6 +29,15 @@ jobs:
       # Jar 파일 복사
       - name: Copy Jar
         run: cp ./build/libs/*.jar ./deploy
+
+      # AppSpec 파일 복사
+      - name: Copy AppSpec file
+        run: cp ./appspec.yml ./deploy/
+
+      # Deploy script 복사
+      - name: Copy deploy script
+        run: cp ./scripts/deploy.sh ./deploy/
+
       - name: Make zip file
         run: zip -r ./jejugamgyuls.zip ./deploy
         shell: bash
@@ -51,5 +60,5 @@ jobs:
          --application-name jejugamgyuls \
          --deployment-group-name jejugamgyuls-group \
          --file-exists-behavior OVERWRITE \
-         --s3-location bucket=jejugamgyuls-deploy,bundleType=zip,key=jejugamgyuls.zip \
+         --s3-location bucket=jejugamgyuls,bundleType=zip,key=jejugamgyuls.zip \
          --region ap-northeast-2
