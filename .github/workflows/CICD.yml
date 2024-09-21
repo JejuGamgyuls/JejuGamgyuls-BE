@@ -51,5 +51,5 @@ jobs:
          --application-name jejugamgyuls \
          --deployment-group-name jejugamgyuls-group \
          --file-exists-behavior OVERWRITE \
-         --s3-location bucket=jejugamgyuls-deploy,bundleType=zip,key=jejugamgyuls.zip \ 
+         --s3-location bucket=jejugamgyuls-deploy,bundleType=zip,key=jejugamgyuls.zip \
          --region ap-northeast-2
