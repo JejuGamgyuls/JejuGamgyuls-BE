@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("Gamgyuls Swagger")  // 프로젝트명에 맞게 수정하세요
+                .title("Gamgyuls Swagger")
                 .description("Gamgyuls 프로젝트의 REST API 문서")
                 .version("1.0.0");
     }
