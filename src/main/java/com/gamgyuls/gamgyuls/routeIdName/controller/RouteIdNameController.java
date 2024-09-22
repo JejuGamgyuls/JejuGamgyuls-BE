@@ -2,6 +2,7 @@ package com.gamgyuls.gamgyuls.routeIdName.controller;
 
 import com.gamgyuls.gamgyuls.routeIdName.model.dao.RouteIdNameDAO;
 import com.gamgyuls.gamgyuls.routeIdName.model.service.RouteIdNameSerivce;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 
-@Controller
 @RestController
 public class RouteIdNameController {
     @Autowired
@@ -20,6 +20,7 @@ public class RouteIdNameController {
     RouteIdNameSerivce serivce;
 
     @GetMapping("/routeNumToId")
+    @Operation(summary = "노선 ID 값 찾기", description = "노선 번호에 맞는 노선ID 값을 반환")
     public String routeNumToId(@RequestParam("routeName") String routeName) throws SQLException {
         try {
             String routeId = dao.read(routeName);
