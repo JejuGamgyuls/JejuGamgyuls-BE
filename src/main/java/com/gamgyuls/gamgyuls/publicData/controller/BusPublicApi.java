@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class ApiController {
+public class BusPublicApi {
 
     @Value("${publicdata.api.key}")
     private String apiKey; // application.properties에서 API 키를 설정할 수 있도록
@@ -26,7 +26,7 @@ public class ApiController {
             String response = restTemplate.getForObject(apiUrl, String.class);
             return ResponseEntity.ok(response);
         } catch (RestClientException e) {
-            e.printStackTrace();
+            System.out.println(e);
             return ResponseEntity.status(500).body("API 요청 중 오류가 발생했습니다.");
         }
     }
