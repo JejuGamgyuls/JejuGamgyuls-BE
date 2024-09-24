@@ -15,6 +15,7 @@ public class RouteIdNameDAOImpl implements RouteIdNameDAO {
     private DBUtil dbUtil;
     @Override
     public String read(String routeName) throws SQLException {
+        System.out.println("-------------------");
         String routeId = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -28,6 +29,8 @@ public class RouteIdNameDAOImpl implements RouteIdNameDAO {
             rs = pstmt.executeQuery();
 
             if (rs.next()) { // 결과가 존재하는지 확인
+                System.out.println("rs: " + rs.toString());
+                System.out.println("rs: " + rs.getString("routeId"));
                 routeId = rs.getString("routeId");
                 System.out.println(routeId);
             }
