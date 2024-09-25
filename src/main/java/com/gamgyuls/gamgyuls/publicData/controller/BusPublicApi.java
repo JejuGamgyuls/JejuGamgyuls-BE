@@ -33,22 +33,22 @@ public class BusPublicApi {
         }
     }
 
-//    @GetMapping("/getBusRouteList")
-//    @Operation(summary = "노선번호에 해당하는 노선 목록 조회", description = "아이디에 해당하는 노선 정보(기점, 종점, 배차간격 등등)에 대한 조회")
-//    public ResponseEntity<String> callPublicAPI(@RequestParam String strSrch){
-//        String apiUrl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList"
-//                + "?serviceKey=" + apiKey + "&strSrch=" + strSrch + "&resultType=json";
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        try {
-//            String response = restTemplate.getForObject(apiUrl, String.class);
-//            return ResponseEntity.ok(response);
-//        } catch (RestClientException e) {
-//            System.out.println(e);
-//            return ResponseEntity.status(500).body("API 요청 중 오류가 발생했습니다.");
-//        }
-//    }
+    @GetMapping("/getBusRouteList")
+    @Operation(summary = "노선번호에 해당하는 노선 목록 조회", description = "아이디에 해당하는 노선 정보(기점, 종점, 배차간격 등등)에 대한 조회")
+    public ResponseEntity<String> callPublicAPI(@RequestParam String strSrch){
+        String apiUrl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList"
+                + "?serviceKey=" + apiKey + "&strSrch=" + strSrch + "&resultType=json";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            String response = restTemplate.getForObject(apiUrl, String.class);
+            return ResponseEntity.ok(response);
+        } catch (RestClientException e) {
+            System.out.println(e);
+            return ResponseEntity.status(500).body("API 요청 중 오류가 발생했습니다.");
+        }
+    }
 
     @GetMapping("/getStaionByRoute")
     @Operation(summary = "노선번호에 해당하는 노선 목록 조회", description = "아이디에 해당하는 노선 정보(기점, 종점, 배차간격 등등)에 대한 조회")
@@ -92,6 +92,22 @@ public class BusPublicApi {
     public ResponseEntity<String> getRoutePath(@RequestParam String busRouteId){
         String apiUrl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getRoutePath"
                 + "?serviceKey=" + apiKey + "&busRouteId" + busRouteId + "&resultType=json";
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            String response = restTemplate.getForObject(apiUrl, String.class);
+            return ResponseEntity.ok(response);
+        } catch (RestClientException e) {
+            System.out.println(e);
+            return ResponseEntity.status(500).body("API 요청 중 오류가 발생했습니다.");
+        }
+    }
+
+    @GetMapping("/getBusPosition")
+    @Operation(summary = "버스 위치 조회 ", description = "노선ID에 해당하는 버스 위치 조회")
+    public ResponseEntity<String> getBusPosition(@RequestParam String busRouteId){
+        String apiUrl = "http://ws.bus.go.kr/api/rest/buspos/getBusPosByRtid"
+                + "?serviceKey=" + apiKey + "&busRouteId=" + busRouteId + "&resultType=json";
         RestTemplate restTemplate = new RestTemplate();
 
         try {
