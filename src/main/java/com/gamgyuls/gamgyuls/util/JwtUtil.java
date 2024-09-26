@@ -12,8 +12,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private final SecretKey secretKey = Keys.hmacShaKeyFor("your-fixed-secret-key-12345678901234567890".getBytes()); // 32바이트 길이의 비밀키
+    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간 후 만료
 
     // JWT 생성 로직
     public String createToken(String subject) {
@@ -32,21 +32,39 @@ public class JwtUtil {
 
     // JWT 검증
     public boolean validateToken(String token, String username) {
-        final String extractedUsername = extractUsername(token);
-        return (extractedUsername.equals(username) && !isTokenExpired(token));
+        try {
+            final String extractedUsername = extractUsername(token);
+            return (extractedUsername.equals(username) && !isTokenExpired(token));
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid token: " + e.getMessage());
+        }
     }
 
     // 사용자 이름 추출
     public String extractUsername(String token) {
+//        System.out.println(extractAllClaims(token).getSubject());
         return extractAllClaims(token).getSubject();
     }
 
     // 클레임 추출
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey) // SecretKey 객체를 직접 사용
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            throw new RuntimeException("Error extracting claims: " + e.getMessage());
+        }
+    }
+
+    // JWT 토큰을 디코딩하는 메서드
+    public Claims decodeToken(String token) {
+        if (isTokenExpired(token)) {
+            throw new RuntimeException("Token has expired");
+        }
+        return extractAllClaims(token);
     }
 
     // 토큰 만료 확인
