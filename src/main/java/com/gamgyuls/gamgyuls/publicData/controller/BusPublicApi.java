@@ -19,7 +19,7 @@ public class BusPublicApi {
     @Operation(summary = "노선 기본 정보 조회", description = "아이디에 해당하는 노선 정보(기점, 종점, 배차간격 등등)에 대한 조회")
     public ResponseEntity<String> callPublicApi(@RequestParam String busRouteId) {
         String apiUrl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getRouteInfo"
-                + "?serviceKey=" + apiKey + "&busRouteId=" + busRouteId;
+                + "?serviceKey=" + apiKey + "&busRouteId=" + busRouteId +"&resultType=json";
 
 
         RestTemplate restTemplate = new RestTemplate();
