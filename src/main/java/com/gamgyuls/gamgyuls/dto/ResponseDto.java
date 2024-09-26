@@ -2,7 +2,6 @@ package com.gamgyuls.gamgyuls.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.xml.stream.events.StartDocument;
 
 @Data
 @AllArgsConstructor(staticName="set")

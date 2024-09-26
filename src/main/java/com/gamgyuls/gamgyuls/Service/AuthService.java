@@ -6,8 +6,6 @@ import com.gamgyuls.gamgyuls.entity.UserEntity;
 import com.gamgyuls.gamgyuls.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthService {
@@ -17,7 +15,6 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    @Transactional //트랜잭션 처리
     public ResponseDto<?> signUp(SignUpDto dto) {
         String userEmail = dto.getEmail();
         String userId = dto.getUserId();

@@ -2,6 +2,7 @@ package com.gamgyuls.gamgyuls.controller;
 
 import com.gamgyuls.gamgyuls.Service.AuthService;
 import com.gamgyuls.gamgyuls.dto.EmailCheckDto;
+import com.gamgyuls.gamgyuls.dto.IdCheckDto;
 import com.gamgyuls.gamgyuls.dto.ResponseDto;
 import com.gamgyuls.gamgyuls.dto.SignUpDto;
 import com.gamgyuls.gamgyuls.repository.UserRepository;
@@ -25,6 +26,17 @@ public class AuthController {
         System.out.println(requestBody.toString());
         ResponseDto<?> result = authService.signUp(requestBody);
         return result;
+    }
+
+    // 아이디 중복 확인
+    @PostMapping("/check-id")
+    public ResponseDto<?> checkId(@RequestBody IdCheckDto idCheckDto) {
+        String userId = idCheckDto.getUserId();
+        System.out.println("Received id: " + userId);
+        if (userRepository.existsByUserId(userId)) {
+            return ResponseDto.setFailed("Existed Id");
+        }
+        return ResponseDto.setSuccess("Id is available", null);
     }
 
     // 이메일 중복 확인
