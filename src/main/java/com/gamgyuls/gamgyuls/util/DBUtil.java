@@ -9,11 +9,12 @@ import java.sql.SQLException;
 @Component
 public class DBUtil {
 
-    private final String driverName = "org.mariadb.jdbc.Driver";
-    private final String url = "jdbc:mariadb://ureca-jeju.c508aimkwxnt.ap-northeast-2.rds.amazonaws.com:3306/ureca?serverTimezone=UTC";
-    private final String user = "admin";
+    private final String driverName = "com.mysql.cj.jdbc.Driver";
+    private final String url = "jdbc:mysql://127.0.0.1:3306/ureca?serverTimezone=UTC";
+    private final String user = "ureca";
+    private final String pass = "ureca";
 
-    private final String pass = "urecaureca";
+    private static DBUtil instance = new DBUtil();
 
     public DBUtil() {
         try {
@@ -21,6 +22,10 @@ public class DBUtil {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static DBUtil getInstance() {
+        return instance;
     }
 
     public Connection getConnection() throws SQLException {
