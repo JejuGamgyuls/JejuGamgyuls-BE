@@ -6,6 +6,8 @@ import com.gamgyuls.gamgyuls.entity.UserEntity;
 import com.gamgyuls.gamgyuls.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthService {
@@ -21,24 +23,16 @@ public class AuthService {
         String userId = dto.getUserId();
         String userPassword = dto.getPwd();
         String userName = dto.getName();
-//        String userPasswordCheck = dto.getPwdCheck();
 
-        // email 중복 확인
-        if (userRepository.existsByEmail(userEmail)) {
-            return ResponseDto.setFailed("Existed Email");
-        }
-//        if (!userPassword.equals(userPasswordCheck)) {
-//            return ResponseDto.setFailed("Password is wrong");
-//        }
         UserEntity userEntity = new UserEntity(dto);
 
         try {
             userRepository.save(userEntity);
-//            userRepository.insertUser(userEmail, userId, userPassword, userName);
         } catch (Exception e) {
             ResponseDto.setFailed("Database Error");
         }
 
         return ResponseDto.setSuccess("SignUp Success!", null);
     }
+
 }
