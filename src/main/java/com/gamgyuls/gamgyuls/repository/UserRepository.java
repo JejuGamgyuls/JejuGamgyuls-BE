@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    boolean existsByUserId(String userId);
     boolean existsByEmail(String email);
 }
 // Entity를 통해 db에 접근하는 역할
