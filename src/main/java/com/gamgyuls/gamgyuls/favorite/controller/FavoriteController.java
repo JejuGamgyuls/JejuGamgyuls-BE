@@ -5,6 +5,7 @@ import com.gamgyuls.gamgyuls.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import com.gamgyuls.gamgyuls.favorite.dto.FavoriteDTO;
 import com.gamgyuls.gamgyuls.favorite.model.dao.FavoriteDAO;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-favorites")
+@RequestMapping("/favorites")
 public class FavoriteController {
 
     private final FavoriteDAO favoriteDAO;
@@ -29,7 +30,8 @@ public class FavoriteController {
     }
 
     // 즐겨찾기 추가
-    @PostMapping
+    @PostMapping("/add")
+    @Operation(summary = "즐겨찾기 추가", description = "jwt를 활용한 즐겨찾기 추가")
     public ResponseEntity<String> addUserFavorite(@RequestBody FavoriteDTO userFavoriteDTO, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>("Authorization header is missing.", HttpStatus.UNAUTHORIZED);
@@ -47,7 +49,8 @@ public class FavoriteController {
     }
 
     // 특정 정류장 즐겨찾기 조회
-    @GetMapping("/{userId}")
+    @GetMapping("/getByUserToken")
+    @Operation(summary = "즐겨찾기 조회", description = "사용자가 즐겨찾기한 버스 리스트 조회")
     public ResponseEntity<List<FavoriteDTO>> getUserFavoriteById( @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         String jwtToken = token.substring(7);
@@ -63,14 +66,16 @@ public class FavoriteController {
     }
 
     // 모든 즐겨찾기 조회
-    @GetMapping
+    @GetMapping("/all")
+    @Operation(summary = "즐겨찾기 전체 조회", description = "즐겨찾기 DB에 있는 모든 데이터 조회")
     public ResponseEntity<List<FavoriteDTO>> getAllUserFavorites() {
         List<FavoriteDTO> userFavorites = favoriteDAO.getAllFavorites();
         return new ResponseEntity<>(userFavorites, HttpStatus.OK);
     }
 
     // 즐겨찾기 삭제
-    @DeleteMapping("/{busStopId}")
+    @DeleteMapping("/delete")
+    @Operation(summary = "즐겨찾기 삭제", description = "사용자가 즐겨찾기한 버스 리스트 삭제")
     public ResponseEntity<String> deleteUserFavorite(@PathVariable String busStopId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String jwtToken = token.substring(7);
         Claims claims = jwtUtil.decodeToken(jwtToken);
