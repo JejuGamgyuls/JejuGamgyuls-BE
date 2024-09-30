@@ -109,18 +109,19 @@ public class FavoriteDAOImpl implements FavoriteDAO{
     }
 
     @Override
-    public void deleteFavorite(String busStopId, String userId) {
+    public void deleteFavorite(String busStopId, String routeid, String userId) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "DELETE FROM UserFavorite WHERE busStopId = ? and userId = ?";
+        String sql = "DELETE FROM UserFavorite WHERE busStopId = ? and routeid = ? and userId = ?";
         try {
             conn = dbUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, busStopId);
-            pstmt.setString(2, userId);
+            pstmt.setString(2, routeid);
+            pstmt.setString(3, userId);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

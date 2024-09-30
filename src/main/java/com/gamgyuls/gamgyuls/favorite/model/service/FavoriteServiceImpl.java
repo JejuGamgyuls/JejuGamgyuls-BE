@@ -31,7 +31,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public void deleteFavorite(String busStopId, String userId) {
-         favoriteDAO.deleteFavorite(busStopId, userId);
+    public void deleteFavorite(String busStopId,String routeid, String userId) {
+         favoriteDAO.deleteFavorite(busStopId, routeid, userId);
     }
 }

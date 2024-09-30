@@ -14,5 +14,5 @@ public interface FavoriteDAO {
     List<FavoriteDTO> getAllFavorites();
 
     // 즐겨찾기 삭제
-    void deleteFavorite(String busStopId, String userId);
+    void deleteFavorite(String busStopId, String routeid, String userId);
 }

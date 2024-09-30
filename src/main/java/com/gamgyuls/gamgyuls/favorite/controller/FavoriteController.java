@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/favorites")
 public class FavoriteController {
@@ -38,6 +40,8 @@ public class FavoriteController {
         }
 
         String jwtToken = token.substring(7);
+        System.out.println("================");
+        System.out.println(jwtToken);
         Claims claims = jwtUtil.decodeToken(jwtToken);
         String userId = claims.get("sub", String.class);
         System.out.println(userId);
@@ -56,13 +60,8 @@ public class FavoriteController {
         String jwtToken = token.substring(7);
         Claims claims = jwtUtil.decodeToken(jwtToken);
         String userId = claims.get("sub", String.class);
-
         List<FavoriteDTO> userFavorite = favoriteDAO.getFavoriteById(userId);
-        if (userFavorite != null && !userFavorite.isEmpty()) {
-            return new ResponseEntity<>(userFavorite, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(userFavorite, HttpStatus.OK);
     }
 
     // 모든 즐겨찾기 조회
@@ -76,13 +75,13 @@ public class FavoriteController {
     // 즐겨찾기 삭제
     @DeleteMapping("/delete")
     @Operation(summary = "즐겨찾기 삭제", description = "사용자가 즐겨찾기한 버스 리스트 삭제")
-    public ResponseEntity<String> deleteUserFavorite(@PathVariable String busStopId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<String> deleteUserFavorite(@RequestParam String busStopId, @RequestParam String routeid, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String jwtToken = token.substring(7);
         Claims claims = jwtUtil.decodeToken(jwtToken);
         String userId = claims.get("sub", String.class);
         System.out.println("-------------");
-        System.out.println(userId);
-        favoriteDAO.deleteFavorite(busStopId, userId);
+        System.out.println(userId+ busStopId+ routeid);
+        favoriteDAO.deleteFavorite(busStopId, routeid, userId);
         return new ResponseEntity<>("User favorite deleted successfully.", HttpStatus.OK);
     }
 }

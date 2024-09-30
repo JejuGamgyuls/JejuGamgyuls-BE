@@ -13,13 +13,13 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     private final SecretKey secretKey = Keys.hmacShaKeyFor("your-fixed-secret-key-12345678901234567890".getBytes()); // 32바이트 길이의 비밀키
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간 후 만료
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 21; // 30일 만료
 
     // JWT 생성 로직
     public String createToken(String subject) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-
+        System.out.println(nowMillis);
         // JWT 생성
         JwtBuilder builder = Jwts.builder()
                 .setSubject(subject)
