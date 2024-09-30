@@ -9,5 +9,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     boolean existsByUserId(String userId);
     boolean existsByEmail(String email);
+    void deleteByUserId(String userId);
 }
 // Entity를 통해 db에 접근하는 역할

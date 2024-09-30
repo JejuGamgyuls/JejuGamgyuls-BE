@@ -28,6 +28,17 @@ public class AuthController {
         return result;
     }
 
+    @DeleteMapping("/signOut/{userId}")
+    public ResponseDto<?> deleteUser(@PathVariable String userId) {
+        System.out.println("Deleting user with ID: " + userId);
+        boolean result = authService.deleteUser(userId);
+        if (result) {
+            return ResponseDto.setSuccess("User deleted successfully", null);
+        } else {
+            return ResponseDto.setFailed("Failed to delete user");
+        }
+    }
+
     // 아이디 중복 확인
     @PostMapping("/check-id")
     public ResponseDto<?> checkId(@RequestBody IdCheckDto idCheckDto) {

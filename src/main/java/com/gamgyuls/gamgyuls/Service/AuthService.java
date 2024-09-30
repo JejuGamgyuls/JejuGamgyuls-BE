@@ -12,7 +12,18 @@ public class AuthService {
     private final UserRepository userRepository;
 
     public AuthService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
+    }
+
+    @Transactional
+    public boolean deleteUser(String userId) {
+        System.out.println("Checking if user exists with ID: " + userId);
+        if (userRepository.existsByUserId(userId)) {
+            userRepository.deleteByUserId(userId);
+            return true;
+        }
+        return false;
     }
 
     public ResponseDto<?> signUp(SignUpDto dto) {

@@ -34,4 +34,5 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void deleteFavorite(String busStopId,String routeid, String userId) {
          favoriteDAO.deleteFavorite(busStopId, routeid, userId);
     }
+
 }
