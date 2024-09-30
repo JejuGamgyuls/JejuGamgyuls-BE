@@ -30,17 +30,20 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "아이디와 패스워드를 통한 로그인", description = "로그인 성궁시 true, 실패시 false")
+    @Operation(summary = "아이디와 패스워드를 통한 로그인", description = "로그인 성공 시 true, 실패 시 false")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Login dto) throws SQLException {
-        Boolean loginResult = dao.read(dto);
+        Map<String, Object> loginResult = dao.read(dto);
 
+        Boolean isLoginSuccessful = (Boolean) loginResult.get("isLoginSuccessful"); // 로그인 성공 여부
+        String userName = (String) loginResult.get("userName");
         try {
             Map<String, Object> response = new HashMap<>();
-            if (loginResult) {
+            if (isLoginSuccessful != null && isLoginSuccessful) {
                 String jwtToken = jwtUtil.createToken(dto.getUserId());
 
                 response.put("message", "로그인 성공");
                 response.put("jwt", jwtToken);
+                response.put("name", userName); // 유저 이름 반환
 
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
             } else {

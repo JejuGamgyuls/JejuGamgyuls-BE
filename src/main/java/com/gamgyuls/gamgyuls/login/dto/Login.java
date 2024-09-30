@@ -2,15 +2,15 @@ package com.gamgyuls.gamgyuls.login.dto;
 
 public class Login {
 
-    private String userId;    // User ID
+    private String user_id;    // User ID
     private String pwd;       // Password
 
     public String getUserId() {
-        return userId;
+        return user_id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getPwd() {
@@ -21,15 +21,15 @@ public class Login {
         this.pwd = pwd;
     }
 
-    public Login(String userId, String pwd) {
-        this.userId = userId;
+    public Login(String user_id, String pwd) {
+        this.user_id = user_id;
         this.pwd = pwd;
     }
 
     @Override
     public String toString() {
         return "Login{" +
-                "userId='" + userId + '\'' +
+                "userId='" + user_id + '\'' +
                 ", pwd='" + pwd + '\'' +
                 '}';
     }
