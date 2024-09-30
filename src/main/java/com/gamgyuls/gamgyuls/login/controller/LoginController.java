@@ -36,6 +36,7 @@ public class LoginController {
 
         Boolean isLoginSuccessful = (Boolean) loginResult.get("isLoginSuccessful"); // 로그인 성공 여부
         String userName = (String) loginResult.get("userName");
+        String userId = (String) loginResult.get("userId");
         try {
             Map<String, Object> response = new HashMap<>();
             if (isLoginSuccessful != null && isLoginSuccessful) {
@@ -44,6 +45,7 @@ public class LoginController {
                 response.put("message", "로그인 성공");
                 response.put("jwt", jwtToken);
                 response.put("name", userName); // 유저 이름 반환
+                response.put("userId", userId);
 
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
             } else {

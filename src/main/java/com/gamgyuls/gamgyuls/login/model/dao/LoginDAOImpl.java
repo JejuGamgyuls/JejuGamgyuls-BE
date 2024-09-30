@@ -38,12 +38,14 @@ public class LoginDAOImpl implements LoginDAO {
             if (rs.next()) { // 결과가 존재하는지 확인
                 dbPWD = rs.getString("pwd"); // DB에서 가져온 비밀번호
                 String userName = rs.getString("name");
+                String userId = dto.getUserId();
 
                 // 비밀번호 비교
                 if (dto.getPwd().equals(dbPWD)) { // Login DTO에서 pwd 추출
                     System.out.println("일치합니다");
                     result.put("isLoginSuccessful", true);
                     result.put("userName", userName);
+                    result.put("userId", userId);
 //                    return true; // 비밀번호가 일치하면 로그인 성공
                 } else {
                     result.put("isLoginSuccessful", false);
