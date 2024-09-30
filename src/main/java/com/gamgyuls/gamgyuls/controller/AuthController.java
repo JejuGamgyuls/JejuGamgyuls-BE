@@ -1,10 +1,7 @@
 package com.gamgyuls.gamgyuls.controller;
 
 import com.gamgyuls.gamgyuls.Service.AuthService;
-import com.gamgyuls.gamgyuls.dto.EmailCheckDto;
-import com.gamgyuls.gamgyuls.dto.IdCheckDto;
-import com.gamgyuls.gamgyuls.dto.ResponseDto;
-import com.gamgyuls.gamgyuls.dto.SignUpDto;
+import com.gamgyuls.gamgyuls.dto.*;
 import com.gamgyuls.gamgyuls.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +25,10 @@ public class AuthController {
         return result;
     }
 
-    @DeleteMapping("/signOut/{userId}")
-    public ResponseDto<?> deleteUser(@PathVariable String userId) {
+    // 회원 탈퇴
+    @PostMapping("/signOut")
+    public ResponseDto<?> deleteUser(@RequestBody UserIdDto userIdDto ) {
+        String userId = userIdDto.getUserId();
         System.out.println("Deleting user with ID: " + userId);
         boolean result = authService.deleteUser(userId);
         if (result) {
